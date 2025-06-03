@@ -12,8 +12,21 @@ dependencies:
   flutter:
     sdk: flutter
 
+  #Utility Packages
+  http: ^1.4.0
+  intl: ^0.20.2
+  logger: ^2.5.0
+  url_launcher: ^6.3.1
+  flutter_native_splash: ^2.4.6 #for splsh screen 
+  smooth_page_indicator: ^1.2.1 #for onboarding screen
+
+  #icons
+  iconsax: ^0.0.8
   cupertino_icons: ^1.0.8
 
+  #state management
+  get: ^4.7.2
+  get_storage: ^2.1.1
 
 dev_dependencies:
   flutter_test:

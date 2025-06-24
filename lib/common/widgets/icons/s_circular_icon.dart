@@ -37,10 +37,13 @@ class SCircularIcon extends StatelessWidget {
             backgroundColor != null
                 ? backgroundColor!
                 : dark
-                ? SColors.black.withOpacity(0.9)
-                : SColors.white.withOpacity(0.9),
+                ? SColors.black.withAlpha((0.9 * 255).toInt())
+                : SColors.white.withAlpha((0.9 * 255).toInt()),
       ),
-      child: IconButton(onPressed: onPressed, icon: Icon(icon,color: color, size:size)),
+      child: IconButton(
+        onPressed: onPressed,
+        icon: Icon(icon, color: color, size: size),
+      ),
     );
   }
 }

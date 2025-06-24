@@ -47,7 +47,9 @@ class SProductCardVertical extends StatelessWidget {
                     top: 12,
                     child: SRoundedContainer(
                       radius: SSizes.sm,
-                      backgroundColor: SColors.secondary.withOpacity(0.8),
+                      backgroundColor: SColors.secondary.withAlpha(
+                        (0.8 * 255).toInt(),
+                      ),
                       padding: const EdgeInsets.symmetric(
                         horizontal: SSizes.sm,
                         vertical: SSizes.xs,
@@ -88,7 +90,7 @@ class SProductCardVertical extends StatelessWidget {
                   ),
                   const SizedBox(height: SSizes.spaceBtwItems / 2),
 
-                  SBrandTitleTextWithVerifiedIcon(title: 'Nike',),
+                  SBrandTitleTextWithVerifiedIcon(title: 'Nike'),
                 ],
               ),
             ),
@@ -130,4 +132,3 @@ class SProductCardVertical extends StatelessWidget {
     );
   }
 }
-

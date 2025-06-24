@@ -19,6 +19,7 @@ dependencies:
   url_launcher: ^6.3.1
   flutter_native_splash: ^2.4.6 #for splsh screen 
   smooth_page_indicator: ^1.2.1 #for onboarding screen
+  carousel_slider: ^5.1.1
 
   #icons
   iconsax: ^0.0.8

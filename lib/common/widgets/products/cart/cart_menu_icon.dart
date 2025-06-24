@@ -5,11 +5,11 @@ import 'package:iconsax/iconsax.dart';
 class SCartCounterIcon extends StatelessWidget {
   const SCartCounterIcon({
     super.key,
-    required this.iconColor,
+    this.iconColor,
     required this.onPressed,
   });
 
-  final Color iconColor;
+  final Color? iconColor;
   final VoidCallback onPressed;
 
   @override

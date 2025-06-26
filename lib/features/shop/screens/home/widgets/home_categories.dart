@@ -1,13 +1,13 @@
 import 'package:ecommerce/common/widgets/image_text_widget/vertical_image_text.dart';
 import 'package:ecommerce/common/widgets/texts/section_heading.dart';
+import 'package:ecommerce/features/shop/screens/sub_category/sub_categories.dart';
 import 'package:ecommerce/utils/constants/image_strings.dart';
 import 'package:ecommerce/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class SHomeCategories extends StatelessWidget {
-  const SHomeCategories({
-    super.key,
-  });
+  const SHomeCategories({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class SHomeCategories extends StatelessWidget {
             textColor: Colors.white,
           ),
           const SizedBox(height: SSizes.spaceBtwItems),
-    
+
           //categories
           SizedBox(
             height: 80,
@@ -34,7 +34,7 @@ class SHomeCategories extends StatelessWidget {
                 return SVerticalImageText(
                   image: SImages.shoeIcon,
                   title: 'Shoes order',
-                  onTap: () {},
+                  onTap: () => Get.to(() => SubCategoriesScreen()),
                 );
               },
             ),
@@ -44,4 +44,3 @@ class SHomeCategories extends StatelessWidget {
     );
   }
 }
-

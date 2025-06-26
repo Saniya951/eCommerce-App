@@ -19,7 +19,7 @@ class SSingleAddress extends StatelessWidget {
       showBorder: true,
       backgroundColor:
           selectedAdress
-              ? SColors.primary.withOpacity(0.5)
+              ? SColors.primary.withAlpha((0.5 * 255).toInt())
               : Colors.transparent,
       borderColor:
           selectedAdress
@@ -39,7 +39,7 @@ class SSingleAddress extends StatelessWidget {
                   selectedAdress
                       ? dark
                           ? SColors.light
-                          : SColors.dark.withOpacity(0.6)
+                          : SColors.dark.withAlpha((0.6 * 255).toInt())
                       : null,
             ),
           ),

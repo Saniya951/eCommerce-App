@@ -44,10 +44,10 @@ class SCouponCode extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 foregroundColor:
                     dark
-                        ? SColors.white.withOpacity(0.5)
-                        : SColors.dark.withOpacity(0.5),
-                backgroundColor: SColors.grey.withOpacity(0.2),
-                side: BorderSide(color: SColors.grey.withOpacity(0.1)),
+                        ? SColors.white.withAlpha((0.5 * 255).toInt())
+                        : SColors.dark.withAlpha((0.5 * 255).toInt()),
+                backgroundColor: SColors.grey.withAlpha((0.2 * 255).toInt()),
+                side: BorderSide(color: SColors.grey.withAlpha((0.1 * 255).toInt())),
               ),
               child: Text('Apply'),
             ),

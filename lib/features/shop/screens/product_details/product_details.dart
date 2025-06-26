@@ -6,7 +6,6 @@ import 'package:ecommerce/features/shop/screens/product_details/widgets/product_
 import 'package:ecommerce/features/shop/screens/product_details/widgets/rating_share_widget.dart';
 import 'package:ecommerce/features/shop/screens/product_reviews/product_reviews.dart';
 import 'package:ecommerce/utils/constants/sizes.dart';
-import 'package:ecommerce/utils/helpers/helper_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -17,7 +16,6 @@ class ProductDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dark = SHelperFunctions.isDarkMode(context);
     return Scaffold(
       bottomNavigationBar: SBottomAddToCart(),
       body: SingleChildScrollView(

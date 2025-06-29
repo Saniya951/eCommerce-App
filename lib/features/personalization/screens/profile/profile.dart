@@ -1,10 +1,14 @@
 import 'package:ecommerce/common/widgets/appbar/appbar.dart';
 import 'package:ecommerce/common/widgets/images/s_circular_image.dart';
 import 'package:ecommerce/common/widgets/texts/section_heading.dart';
+import 'package:ecommerce/features/personalization/controllers/user_controller.dart';
+import 'package:ecommerce/features/personalization/screens/profile/widgets/change_name.dart';
 import 'package:ecommerce/features/personalization/screens/profile/widgets/profile_menu.dart';
+import 'package:ecommerce/features/shop/screens/home/widgets/shimmer.dart';
 import 'package:ecommerce/utils/constants/image_strings.dart';
 import 'package:ecommerce/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -12,6 +16,8 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = UserController.instance;
+
     return Scaffold(
       appBar: SAppBar(title: Text('Profile'), showBackArrow: true),
       //body
@@ -25,9 +31,19 @@ class ProfileScreen extends StatelessWidget {
                 width: double.infinity,
                 child: Column(
                   children: [
-                    SCircularImage(image: SImages.user, width: 50, height: 50),
+                    Obx(() {
+                      final networkImage = controller.user.value.profilePicture;
+                      final image =
+                          networkImage.isNotEmpty ? networkImage : SImages.user;
+                      return controller.imageUploading.value? const SShimmerEffect(width: 80, height: 80,radius: 80,) :SCircularImage(
+                        image: image,
+                        width: 50,
+                        height: 50,
+                        isNetworkingImage: networkImage.isNotEmpty,
+                      );
+                    }),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () => controller.uploadUserProfilePicture(),
                       child: const Text('Change Profile Picture'),
                     ),
                   ],
@@ -46,14 +62,14 @@ class ProfileScreen extends StatelessWidget {
               ),
               const SizedBox(height: SSizes.spaceBtwItems),
               SProfileMenu(
-                onPressed: () {},
+                onPressed: () => Get.to(() => const ChangeName()),
                 title: 'Name',
-                value: 'Saniya Dangat',
+                value: controller.user.value.fullName,
               ),
               SProfileMenu(
                 onPressed: () {},
                 title: 'UserName',
-                value: 'saniyadangat',
+                value: controller.user.value.username,
               ),
 
               const SizedBox(height: SSizes.spaceBtwItems / 2),
@@ -68,19 +84,19 @@ class ProfileScreen extends StatelessWidget {
               const SizedBox(height: SSizes.spaceBtwItems),
               SProfileMenu(
                 onPressed: () {},
-                title: 'User-ID',
+                title: 'User ID',
                 icon: Iconsax.copy,
-                value: '12654',
+                value: controller.user.value.id,
               ),
               SProfileMenu(
                 onPressed: () {},
-                title: 'E-mail',
-                value: 'saniyadangat',
+                title: 'Email',
+                value: controller.user.value.email,
               ),
               SProfileMenu(
                 onPressed: () {},
                 title: 'Phone Number',
-                value: '92-919-59-56156',
+                value: controller.user.value.phoneNumber,
               ),
               SProfileMenu(onPressed: () {}, title: 'Gender', value: 'Female'),
               SProfileMenu(
@@ -94,7 +110,7 @@ class ProfileScreen extends StatelessWidget {
 
               Center(
                 child: TextButton(
-                  onPressed: () {},
+                  onPressed: () => controller.deleteAccountWarningPopup(),
                   child: const Text(
                     'Close Account',
                     style: TextStyle(color: Colors.red),

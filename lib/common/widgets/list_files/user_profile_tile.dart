@@ -1,4 +1,5 @@
 import 'package:ecommerce/common/widgets/images/s_circular_image.dart';
+import 'package:ecommerce/features/personalization/controllers/user_controller.dart';
 import 'package:ecommerce/utils/constants/colors.dart';
 import 'package:ecommerce/utils/constants/image_strings.dart';
 import 'package:flutter/material.dart';
@@ -10,16 +11,18 @@ class SUserProfileTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = UserController.instance;
+    
     return ListTile(
       leading: SCircularImage(image: SImages.user, width: 50, height: 50),
       title: Text(
-        'Coding with S',
+        controller.user.value.fullName,
         style: Theme.of(
           context,
         ).textTheme.headlineSmall!.apply(color: SColors.white),
       ),
       subtitle: Text(
-        'saniyadangat@gmail.com',
+        controller.user.value.email,
         style: Theme.of(
           context,
         ).textTheme.bodyMedium!.apply(color: SColors.white),

@@ -1,3 +1,4 @@
+import 'package:ecommerce/data/user/user_repository.dart';
 import 'package:ecommerce/features/authentication/screens/login/login.dart';
 import 'package:ecommerce/features/authentication/screens/onboarding/onboarding.dart';
 import 'package:ecommerce/features/authentication/screens/signup/verify_email.dart';
@@ -20,6 +21,9 @@ class AuthenticationRepository extends GetxController {
   final deviceStorage = GetStorage();
   final _auth = FirebaseAuth.instance;
 
+  //get authenticated user data
+  User? get authUser => _auth.currentUser;
+
   //called from main.dart an app launch
 
   @override
@@ -29,31 +33,6 @@ class AuthenticationRepository extends GetxController {
   }
 
   //function to show relevant screen
-  //   void screenRedirect() async {
-  //   await Future.delayed(const Duration(milliseconds: 500)); // Optional: smoother UX
-
-  //   final user = _auth.currentUser;
-  //   await user?.reload(); // always reload to refresh email verification status
-  //   final refreshedUser = _auth.currentUser;
-
-  //   final isFirstTime = deviceStorage.read('IsFirstTime') ?? true;
-
-  //   if (refreshedUser != null) {
-  //     if (refreshedUser.emailVerified) {
-  //       Get.offAll(() => const NavigationMenu());
-  //     } else {
-  //       Get.offAll(() => VerifyEmailScreen(email: refreshedUser.email));
-  //     }
-  //   } else {
-  //     if (isFirstTime) {
-  //       await deviceStorage.write('IsFirstTime', false);
-  //       Get.offAll(() => const OnBoardingScreen());
-  //     } else {
-  //       Get.offAll(() => const LoginScreen());
-  //     }
-  //   }
-  // }
-
   void screenRedirect() async {
     final user = _auth.currentUser;
     if (user != null) {
@@ -195,6 +174,50 @@ class AuthenticationRepository extends GetxController {
   Future<void> sendPasswordResetEmail(String email) async {
     try {
       await _auth.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      throw SFirebaseAuthException(e.code).message;
+    } on FirebaseAuthException catch (e) {
+      throw SFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const FormatException();
+    } on PlatformException catch (e) {
+      throw SPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong.Please try again!';
+    }
+  }
+
+  //Reauthenticate user
+  Future<void> reAuthenticateWithEmailAndPassword(
+    String email,
+    String password,
+  ) async {
+    try {
+      AuthCredential credential = EmailAuthProvider.credential(
+        email: email,
+        password: password,
+      ); //create credential
+
+      //reauthenticate
+      await _auth.currentUser!.reauthenticateWithCredential(credential);
+    } on FirebaseAuthException catch (e) {
+      throw SFirebaseAuthException(e.code).message;
+    } on FirebaseAuthException catch (e) {
+      throw SFirebaseException(e.code).message;
+    } on FormatException catch (_) {
+      throw const FormatException();
+    } on PlatformException catch (e) {
+      throw SPlatformException(e.code).message;
+    } catch (e) {
+      throw 'Something went wrong.Please try again!';
+    }
+  }
+
+  //delete account
+  Future<void> deleteAccount() async {
+    try {
+      await UserRepository.instance.removeUserRecord(_auth.currentUser!.uid);
+      await _auth.currentUser?.delete();
     } on FirebaseAuthException catch (e) {
       throw SFirebaseAuthException(e.code).message;
     } on FirebaseAuthException catch (e) {

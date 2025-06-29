@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ecommerce/features/shop/screens/home/widgets/shimmer.dart';
 import 'package:ecommerce/utils/constants/colors.dart';
 import 'package:ecommerce/utils/constants/sizes.dart';
 import 'package:ecommerce/utils/helpers/helper_functions.dart';
@@ -37,11 +39,22 @@ class SCircularImage extends StatelessWidget {
                 : SColors.white),
         borderRadius: BorderRadius.circular(100),
       ),
-      child: Center(
-        child: Image(
-          fit:fit,
-          image:isNetworkingImage? NetworkImage(image): AssetImage(image) as ImageProvider,
-          color:overlayColor,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(100),
+        child: Center(
+          child:isNetworkingImage?
+          CachedNetworkImage(
+            fit:fit,
+            color: overlayColor,
+            imageUrl:image,
+            progressIndicatorBuilder: (context ,url,downloadProgress)=> const SShimmerEffect(width: 55, height: 55),
+            errorWidget:(context,url,error)=> const Icon(Icons.error),
+          )
+          : Image(
+            fit:fit,
+            image:AssetImage(image),
+            color:overlayColor,
+          ),
         ),
       ),
     );

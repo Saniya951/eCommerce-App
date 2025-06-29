@@ -1,4 +1,5 @@
-import 'package:ecommerce/features/authentication/screens/onboarding/onboarding.dart';
+import 'package:ecommerce/bindings/general_bindings.dart';
+import 'package:ecommerce/utils/constants/colors.dart';
 import 'package:ecommerce/utils/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,7 +13,12 @@ class App extends StatelessWidget {
       themeMode: ThemeMode.system,
       theme: SAppTheme.lightTheme,
       darkTheme: SAppTheme.darkTheme,
-      home: const OnBoardingScreen(),
+      initialBinding: GeneralBindings(),
+      //show loader indicator meanwhile repo is deciding to show relevant screen
+      home: const Scaffold(
+        backgroundColor: SColors.primary,
+        body: Center(child: CircularProgressIndicator(color: Colors.white)),
+      ),
     );
   }
 }

@@ -17,6 +17,8 @@ dependencies:
   intl: ^0.20.2
   logger: ^2.5.0
   url_launcher: ^6.3.1
+  lottie: ^3.3.1
+  connectivity_plus: ^6.1.4
   flutter_native_splash: ^2.4.6 #for splsh screen
   smooth_page_indicator: ^1.2.1 #for onboarding screen
   carousel_slider: ^5.1.1
@@ -32,6 +34,13 @@ dependencies:
   #product spcific
   readmore: ^3.0.0
   flutter_rating_bar: ^4.0.1
+
+  #firebase
+  firebase_core: ^3.14.0
+  firebase_auth: ^5.6.0
+  cloud_firestore: ^5.6.9
+  # google_sign_in: ^7.0.0
+  google_sign_in: ^6.2.1
 
 dev_dependencies:
   flutter_test:

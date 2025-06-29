@@ -1,7 +1,8 @@
-import 'package:ecommerce/features/authentication/screens/signup/verify_email.dart';
+import 'package:ecommerce/features/authentication/controllers/signup/signup_controller.dart';
 import 'package:ecommerce/features/authentication/screens/signup/widgets/terms_condition_checkbox.dart';
 import 'package:ecommerce/utils/constants/sizes.dart';
 import 'package:ecommerce/utils/constants/text_strings.dart';
+import 'package:ecommerce/utils/validators/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
@@ -11,7 +12,10 @@ class SSignupForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(SignupController());
+
     return Form(
+      key: controller.signupFormKey,
       child: Column(
         children: [
           Row(
@@ -20,6 +24,10 @@ class SSignupForm extends StatelessWidget {
                 //Expanded if the Row has multiple children and you want the TextFormField to take up the available horizontal space.
                 //we want to 2 inputs rectangles in row hence use expanded
                 child: TextFormField(
+                  controller: controller.firstName,
+                  validator:
+                      (value) =>
+                          SValidator.validateEmptyText('First name', value),
                   expands: false,
                   decoration: const InputDecoration(
                     labelText: STexts.firstName,
@@ -32,6 +40,10 @@ class SSignupForm extends StatelessWidget {
                 //Expanded if the Row has multiple children and you want the TextFormField to take up the available horizontal space.
                 //we want to 2 inputs rectangles in row hence use expanded
                 child: TextFormField(
+                  controller: controller.lastName,
+                  validator:
+                      (value) =>
+                          SValidator.validateEmptyText('Last name', value),
                   expands: false,
                   decoration: const InputDecoration(
                     labelText: STexts.lastName,
@@ -46,6 +58,9 @@ class SSignupForm extends StatelessWidget {
 
           //username
           TextFormField(
+            controller: controller.username,
+            validator:
+                (value) => SValidator.validateEmptyText('Username', value),
             expands: false,
             decoration: const InputDecoration(
               labelText: STexts.username,
@@ -57,6 +72,8 @@ class SSignupForm extends StatelessWidget {
 
           //email
           TextFormField(
+            controller: controller.email,
+            validator: (value) => SValidator.validateEmail(value),
             decoration: const InputDecoration(
               labelText: STexts.email,
               prefixIcon: Icon(Iconsax.direct),
@@ -67,6 +84,8 @@ class SSignupForm extends StatelessWidget {
 
           //phone number
           TextFormField(
+            validator: (value) => SValidator.validatePhoneNumber(value),
+            controller: controller.phoneNumber,
             decoration: const InputDecoration(
               labelText: STexts.phoneNo,
               prefixIcon: Icon(Iconsax.call),
@@ -76,12 +95,22 @@ class SSignupForm extends StatelessWidget {
           const SizedBox(height: SSizes.spaceBtwInputFields),
 
           //password
-          TextFormField(
-            obscureText: true,
-            decoration: const InputDecoration(
-              labelText: STexts.password,
-              prefixIcon: Icon(Iconsax.password_check),
-              suffixIcon: Icon(Iconsax.eye_slash),
+          Obx(
+            ()=> TextFormField(
+              controller: controller.password,
+              validator: (value) => SValidator.validatePassword(value),
+              obscureText: controller.hidePassword.value,
+              decoration: InputDecoration(
+                labelText: STexts.password,
+                prefixIcon: Icon(Iconsax.password_check),
+                suffixIcon: IconButton(
+                  onPressed:
+                      () =>
+                          controller.hidePassword.value =
+                              !controller.hidePassword.value,
+                  icon: Icon(controller.hidePassword.value? Iconsax.eye_slash:Iconsax.eye),
+                ),
+              ),
             ),
           ),
 
@@ -96,7 +125,7 @@ class SSignupForm extends StatelessWidget {
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: ()=> Get.to(()=>const VerifyEmailScreen()),
+              onPressed: () => controller.signup(),
               child: const Text(STexts.createAccount),
             ),
           ),
